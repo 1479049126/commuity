@@ -1,0 +1,14 @@
+<resultMap type="CommentDto" id="CommentMapper">
+    <!-- association ：配置一对一属性 -->
+    <!-- property:order里面的User属性名 -->
+    <!-- javaType:属性类型 -->
+    <association property="User" javaType="User">
+        <!-- id:声明主键，表示user_id是关联查询对象的唯一标识-->
+        <id property="id" column="ID" />
+        <result property="name" column="NAME" />
+        <result property="accountId" column="ACCOUNTID" />
+        <result property="token" column="TOKEN" />
+        <result property="Avatar_Url" column="Avatar_Url" />
+    </association>
+
+</resultMap>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>发布——Letcode社区</title>
+    <script src="/js/jquery-3.4.1.js"TYPE="application/javascript"></script>
+    <script src="/js/bootstrap.js" TYPE="application/javascript"></script>
+    <script src="/js/editormd.js" TYPE="application/javascript"></script>
+    <script src="/lib/marked.min.js" TYPE="application/javascript"></script>
+    <script src="/lib/prettify.min.js" TYPE="application/javascript"></script>
+    <script src="/js/editormd.min.js"TYPE="application/javascript"></script>
+    <link rel="stylesheet" href="/css/editormd.preview.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.css">
+
+</head>
+<body class="body">
+    <div th:replace="~{navigation::nav}"></div>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  ">
+                <h2><span class="glyphicon glyphicon-upload" aria-hidden="true"></span>发起</h2>
+                <hr>
+                <form action="/publish" method="post">
+                    <input type="hidden"name="id"th:value="${id}">
+                    <div class="form-group">
+                        <label for="title">问题标题(简单说明)</label>
+                        <input name="title" type="text" class="form-control" id="title" th:value="${title}" placeholder="请输入标题" autocomplete="off" data-rule="标题:required; length(0~30)">
+                    </div>
+                    <div class="form-group" id="question-edit">
+                        <label for="title">问题描述(具体描述)</label>
+                        <textarea class="form-control" name="description" id="description" cols="30" row="10" th:value="${description}"style="display: none";></textarea>
+                    </div>
+                    <script type="text/javascript">
+                        $(function() {
+                            var editor = editormd("question-edit", {
+                                 width  : "100%",
+                                 height : 350,
+                                path   : "/lib/",
+                                delay:0,
+                                watch:false,
+                                placeholder:"请输入描述",
+                                imageUpload    : true,
+                                imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                imageUploadURL : "/file/upload",
+                            });
+                        });
+                    </script>
+                    <div class="form-group">
+                    <label for="title">添加标签:</label>
+                        <input type = "text"class="form-control" id="tag" name="tag" placeholder="输入标签，以，作为分隔"  th:value="${tags}">
+                    </div>
+                    <span th:if="${error}!=null" class="alert alert-danger" th:text="${error}"></span>
+                    <button type="submit" class="btn btn-success button">发布</button>
+
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                <h2>问题发起指南</h2><br>
+                ·问题标题：使用精简的语言描述你的问题,不超过25字<br>
+                ·问题描述：详细的描述你的问题内容，并且确保问题清楚<br>
+                <br>
+                ·在描述问题时：请善用代码格式化，方便阅读<br>
+                ·选择标签：使得你的问题自动分类到相应板块，用逗号隔开，每个标签不超过10字<br>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
